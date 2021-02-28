@@ -20,17 +20,26 @@ namespace yam
 	{
 	public:
 
+		//Creates the window
 		GameWindow(const GameWindowCreationParams& params);
+		~GameWindow();
 
+		GameWindow(const GameWindow& other) = delete;
+		GameWindow& operator=(GameWindow& other) = delete;
+
+		//Polls all the events
 		void update();
 
+		//Returns true if the close button has been clicked
 		bool isClosed();
+
+		uint32 getWidth();
+		uint32 getHeight();
 
 		//Accepts messages from WndProc
 		LRESULT handleMessage(HWND window, UINT message, WPARAM wParam, LPARAM lParam);
 
 	private:
-
 		HWND hwnd;
 		bool closed;
 	};

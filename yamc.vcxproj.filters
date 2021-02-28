@@ -4,10 +4,12 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\GameWindow.cpp" />
     <ClCompile Include="src\Types.cpp" />
+    <ClCompile Include="src\GameRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\IncludeWindows.hpp" />
     <ClInclude Include="src\GameWindow.hpp" />
     <ClInclude Include="src\Types.hpp" />
+    <ClInclude Include="src\GameRenderer.hpp" />
   </ItemGroup>
 </Project>

@@ -24,11 +24,11 @@ namespace yam
 		{
 			CREATESTRUCTW* cs = reinterpret_cast<CREATESTRUCTW*>(lParam);
 			instance = reinterpret_cast<GameWindow*>(cs->lpCreateParams);
-			SetWindowLongW(window, GWLP_USERDATA, reinterpret_cast<LONG>(cs->lpCreateParams));
+			SetWindowLongPtrW(window, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(cs->lpCreateParams));
 		}
 		else
 		{
-			instance = reinterpret_cast<GameWindow*>(GetWindowLongW(window, GWLP_USERDATA));
+			instance = reinterpret_cast<GameWindow*>(GetWindowLongPtrW(window, GWLP_USERDATA));
 		}
 
 		if(instance != nullptr)
@@ -76,6 +76,14 @@ namespace yam
 		this->hwnd = hwnd;
 	}
 
+	GameWindow::~GameWindow()
+	{
+		if(this->hwnd != NULL)
+		{
+			DestroyWindow(this->hwnd);
+		}
+	}
+
 	void GameWindow::update()
 	{
 		MSG msg;
@@ -92,12 +100,27 @@ namespace yam
 		return this->closed;
 	}
 
+	uint32 GameWindow::getWidth()
+	{
+		RECT rect;
+		GetClientRect(this->hwnd, &rect);
+		return rect.right - rect.left;
+	}
+
+	uint32 GameWindow::getHeight()
+	{
+		RECT rect;
+		GetClientRect(this->hwnd, &rect);
+		return rect.bottom - rect.top;
+	}
+
 	LRESULT GameWindow::handleMessage(HWND window, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if(message == WM_CLOSE)
 		{
 			DestroyWindow(window);
 			this->closed = true;
+			this->hwnd = NULL;
 			return true;
 		}
 		else
